@@ -25,8 +25,22 @@ class LessonController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
+        $perPage = request('per_page', 10);
+        $search = request('search', '');
 
-        return LessonResource::collection(Lesson::where('user_id', $user->id)->orderBy('created_at', 'DESC')->paginate(3));
+        $query = Lesson::where('user_id', $user->id)
+        ->orderBy('created_at', 'DESC');
+
+    if ($search) {
+        $query->where(function ($q) use ($search) {
+            $q->where('title', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%");
+    });
+}
+
+return LessonResource::collection($query->paginate($perPage));
+        
+ 
     }
 
     /**

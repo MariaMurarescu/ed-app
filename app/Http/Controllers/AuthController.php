@@ -24,7 +24,7 @@ class AuthController extends Controller
             'confirmed',
             Password::min(8)->mixedCase()->numbers()->symbols()
         ],
-        'role_id' => 'required|in:1,2',
+        'role_id' => 'required|in:1,2,3',
     ]);
 
     

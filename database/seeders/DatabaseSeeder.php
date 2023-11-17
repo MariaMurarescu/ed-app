@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         // Create roles
         $studentRole = Role::firstOrCreate(['name' => 'student']);
         $teacherRole = Role::firstOrCreate(['name' => 'teacher']);
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
     
         // Create student account
         $student = User::create([
@@ -35,5 +36,14 @@ class DatabaseSeeder extends Seeder
                     'role_id' => $teacherRole->id,
                 ]);
         $teacher->roles()->attach($teacherRole);
+
+                        // Create admin accounts
+                        $admin= User::create([
+                            'name' => 'Admin',
+                            'email' => 'admin@example.com',
+                            'password' => Hash::make('password'),
+                            'role_id' => $adminRole->id,
+                        ]);
+        $admin->roles()->attach($adminRole);
     }
 }

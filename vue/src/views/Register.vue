@@ -127,7 +127,7 @@ const router = useRouter();
 
 const errorMessages = ref([]); // Initialize an empty array for error messages
 
-const user = ref ({
+const user = ref({
   name: '',
   email: '',
   password: '',
@@ -135,36 +135,38 @@ const user = ref ({
   role_id: ''
 });
 
+const showPasswordInfo = ref(false); // Declare showPasswordInfo as a ref and initialize it to false
+const showEmailInfo = ref(false); // Declare showEmailInfo as a ref and initialize it to false
 
 async function register(ev) {
   ev.preventDefault();
   errorMessages.value = []; // Clear previous error messages
-  showPasswordInfo = false;
-  showEmailInfo = false
+  showPasswordInfo.value = false; // Use .value to access the ref
+  showEmailInfo.value = false; // Use .value to access the ref
 
   try {
     // Your registration logic here
     await store.dispatch("register", user.value);
-    router.push({ 
+    router.push({
       name: "Login",
     });
     // Check for password criteria and email validation
-if (user.password.length < 8) {
-  showPasswordInfo = true;
-  errorMessages.value.push("Parola trebuie să conțină cel puțin 8 caractere.");
-} else {
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
-  if (!passwordRegex.test(user.password)) {
-    showPasswordInfo = true;
-    errorMessages.value.push("Parola trebuie să conțină cel puțin o majusculă, o literă mică, un număr și un caracter special.");
-  }
-}
+    if (user.value.password.length < 8) {
+      showPasswordInfo.value = true; // Use .value to access the ref
+      errorMessages.value.push("Parola trebuie să conțină cel puțin 8 caractere.");
+    } else {
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
+      if (!passwordRegex.test(user.value.password)) {
+        showPasswordInfo.value = true; // Use .value to access the ref
+        errorMessages.value.push("Parola trebuie să conțină cel puțin o majusculă, o literă mică, un număr și un caracter special.");
+      }
+    }
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-if (!emailRegex.test(user.email)) {
-  showEmailInfo = true;
-  errorMessages.value.push("Adresa de email trebuie să fie validă.");
-}
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(user.value.email)) {
+      showEmailInfo.value = true; // Use .value to access the ref
+      errorMessages.value.push("Adresa de email trebuie să fie validă.");
+    }
   } catch (error) {
     // Handle errors and add corresponding error messages
     if (error.response) {

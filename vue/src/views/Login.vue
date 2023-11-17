@@ -118,6 +118,9 @@ function redirectToRole(userRole) {
     case 2: // Teacher
       router.push({ name: 'teacher' });
       break;
+    case 3: //Admin
+      router.push({name: 'app'});
+      break;
     default:
       // Handle other roles or default redirection here
       router.push({ name: 'teacher' }); // Default redirection

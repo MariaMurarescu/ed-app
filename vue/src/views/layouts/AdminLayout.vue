@@ -16,8 +16,11 @@ import Navbar from './Navbar.vue';
 import Sidebar from './Sidebar.vue';
 import {ref, computed, onMounted, onUnmounted} from 'vue'
 import store from '../../store';
+import { useRouter } from 'vue-router';
 
-const currentUser = computed(() => store.state.user.data);
+const router = useRouter()
+
+const user = computed(() => store.state.user.data);
 
 function toggleSidebar() {
   sidebarOpened.value = !sidebarOpened.value
@@ -29,13 +32,24 @@ function updateSidebarState() {
 
 const sidebarOpened = ref(true);
 
+const logout = () => {
+  store.dispatch('logout')
+    .then(() => {
+      router.push({
+        name: 'Login',
+      });
+    });
+};
+    
+/*
 onMounted(() => {
-  store.dispatch('getCurrentUser')
+  store.dispatch('getUser');
   updateSidebarState();
-  window.addEventListener('resize', updateSidebarState)
-})
+  window.addEventListener('resize', updateSidebarState);
+});
+*/
 
 onUnmounted(() => {
-  window.removeEventListener('resize', updateSidebarState)
-})
+  window.removeEventListener('resize', updateSidebarState);
+});
 </script>

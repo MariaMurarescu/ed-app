@@ -70,11 +70,13 @@ const store = createStore({
             })
           },
 
-
-          getLessons({ commit }, {url = null} = {}) {
+          getLessons({ commit }, {url = null, perPage=6, search = ''} = {}) {
             commit('setLessonsLoading', true)
             url = url || "/lesson";
-            return axiosClient.get(url).then((res) => {
+            return axiosClient.get(url, {
+              params: {search, per_page: perPage}
+            })
+            .then((res) => {
               commit('setLessonsLoading', false)
               commit('setLessons', res.data);
               return res;

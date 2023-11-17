@@ -79,7 +79,7 @@
   function logout() {
     store.dispatch('logout')
       .then(() => {
-        router.push({name: 'login'})
+        router.push({name: 'Login'})
       })
   }
   

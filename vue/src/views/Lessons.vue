@@ -11,6 +11,20 @@
             placeholder="Caută lecție">
         </div>
 
+        <div class="flex items-center">
+        <span class="whitespace-nowrap mr-3">Afișează pe pagină</span>
+        <select @change="getLessons(null)" v-model="perPage"
+                class="appearance-none relative block w-24 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+          <option value="3">3</option>
+          <option value="6">6</option>
+          <option value="9">9</option>
+          <option value="12">12</option>
+        </select>
+        <span class="ml-3">lecții {{lessons.total}} găsite </span>
+      </div>
+
+        
+
         <router-link :to="{ name: 'LessonCreate' }"
           class="ml-4 appearance-none relative block w-48 py-2 px-3 text-white bg-emerald-600 rounded-md hover:bg-emerald-500">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 -mt-1 inline-block" fill="none" viewBox="0 0 24 24"
@@ -60,11 +74,22 @@ import LessonListItem from '../components/LessonListItem.vue';
 import PageComponent from '../components/PageComponent.vue';
 import store from "../store";
 import { computed, ref } from "vue";
+import {LESSONS_PER_PAGE} from "../constants";
 
 const lessons = computed(() => store.state.lessons);
 const search = ref('');
+const perPage = ref(LESSONS_PER_PAGE);
+
 
 store.dispatch('getLessons'); //fetch all available lessons
+
+function getLessons(url = null){
+  store.dispatch('getLessons', {
+    url,
+    search: search.value,
+    perPage: perPage.value,
+  })
+}
 
 function deleteLesson(lesson) {
   if (
