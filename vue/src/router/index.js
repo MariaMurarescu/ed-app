@@ -15,6 +15,8 @@ import AdminLayout from '../views/layouts/AdminLayout.vue';
 import Users from '../views/Users/Users.vue';
 import Report from '../views/Reports/Report.vue';
 import Dashboard from '../views/Dashboard.vue';
+import LessonQuestionAnswer from '../views/LessonQuestionAnswer.vue';
+
 
 import AuthLayout from '../components/AuthLayout.vue';
 import store from '../store';
@@ -102,8 +104,8 @@ const routes = [
         component: StudentLayout, // Student-specific layout
         meta: { requiresAuth: true, requiresStudent: 1 },
         children: [
-            {path: '/agenda', name: 'Agenda', component: Agenda},
-            {path: '/progres', name: 'Progres', component: Progres},
+          {path: '/student', name: 'Student', component: Student},
+          
         ],
       },
 
@@ -117,9 +119,9 @@ const routes = [
           {path: '/Lessons', name: 'Lessons', component: Lessons},
           {path: '/agenda', name: 'Agenda', component: Agenda},
           {path: '/progres', name: 'Progres', component: Progres},
-          {path: '/student', name: 'Student', component: Student},
           {path: '/lessons/create', name: 'LessonCreate', component: LessonView},
           {path: '/lessons/:id', name: 'LessonView', component: LessonView },
+          {path: '/lessons/:lessonId/answers', name: 'LessonQuestionAnswer', component: LessonQuestionAnswer}
         ],
       },
 ] 

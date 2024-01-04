@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLessonAnswerRequest;
 use App\Http\Resources\LessonResource;
+use App\Http\Resources\LessonQuestionAnswerResource;
 use App\Models\Lesson;
 use App\Http\Requests\StoreLessonRequest;
 use App\Http\Requests\UpdateLessonRequest;
+use App\Http\Requests\ShowQuestionAnswerRequest;
 use App\Models\LessonAnswer;
 use App\Models\LessonQuestion;
 use App\Models\LessonQuestionAnswer;
@@ -40,7 +42,6 @@ class LessonController extends Controller
 
 return LessonResource::collection($query->paginate($perPage));
         
- 
     }
 
     /**
@@ -102,6 +103,7 @@ return LessonResource::collection($query->paginate($perPage));
                 }
     
                 $data = [
+                    'lesson_id' => $lesson->id,
                     'lesson_question_id' => $questionId,
                     'lesson_answer_id' => $lessonAnswer->id,
                     'answer' => is_array($answer) ? json_encode($answer) : $answer
@@ -285,4 +287,11 @@ return LessonResource::collection($query->paginate($perPage));
             $data['answer'] = json_encode($data['answer']);
         }
     }
+
+    public function getAnswersForLesson($lessonId)
+    {
+        $answers = LessonQuestionAnswer::where('lesson_id', $lessonId)->get();
+        return LessonQuestionAnswerResource::collection($answers);
+    }
+
 }

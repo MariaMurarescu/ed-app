@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Resources\LessonAnswerResource;
 use App\Http\Resources\LessonResourceDeVorba;
+use App\Http\Resources\LessonQuestionAnswerResource;
 use App\Models\Lesson;
 use App\Models\LessonAnswer;
 
@@ -40,4 +41,15 @@ class DeVorbaController extends Controller
         'latestAnswers' => LessonAnswerResource::collection($latestAnswers)
     ];
     }
+
+    public function getLastAnswerForLastLesson($lessonId)
+{
+    $lastAnswer = LessonQuestionAnswer::query()
+        ->where('lesson_id', $lessonId)
+        ->orderByDesc('created_at')
+        ->first();
+
+    return new LessonQuestionAnswerResource($lastAnswer);
+}
+
 }

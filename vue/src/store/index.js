@@ -21,6 +21,10 @@ const store = createStore({
           limit: null,
           total: null
         },
+        lessonQuestionAnswers: {
+          loading: false,
+          data:{}
+        },
       
         questionTypes:["text", "select", "radio", "checkbox", "textarea"],
         notification:{
@@ -32,7 +36,8 @@ const store = createStore({
         DeVorba: {
           loading: false,
           data: {}
-        }
+        },
+       
         
     },
     getter:{},
@@ -97,6 +102,7 @@ const store = createStore({
                 throw err;
               });
           },
+
           saveLesson({ commit, dispatch}, lesson) {
             delete lesson.image_url;
             let response;
@@ -136,6 +142,7 @@ const store = createStore({
               dispatch('getLessons')
             });
           },
+          
           saveLessonAnswer({ commit }, { lessonId, answers, email }) {
             return axiosClient.post(`/lesson/${lessonId}/answer`, { answers, email });
           },
@@ -153,6 +160,23 @@ const store = createStore({
               return error;
             })
           },
+
+          getLessonQuestionAnswers({ commit }, id) {
+            commit('setLessonQuestionAnswersLoading', true);
+            return axiosClient
+              .get(`/lessons/${id}/answers`)
+              .then((res) => {
+                console.log('Successful response:', res);
+                commit('setLessonQuestionAnswers', res.data);
+                commit('setLessonQuestionAnswersLoading', false);
+                return res;
+              })
+              .catch((err) => {
+                commit('setLessonQuestionAnswersLoading', false);
+                throw err;
+              });
+          },
+        
       },
   
     mutations:{
@@ -195,7 +219,13 @@ const store = createStore({
         setDeVorbaData:(state, data) => {
           state.DeVorba.data = data
         },
-
+        setLessonQuestionAnswersLoading: (state, loading) => {
+          state.lessonQuestionAnswers.loading = loading;
+        },
+        setLessonQuestionAnswers(state, answers) {
+          console.log('Setting lesson question answers:', answers);
+          state.lessonQuestionAnswers.data = answers; 
+        },
 
         notify: (state, {message, type}) => {
           state.notification.show = true;

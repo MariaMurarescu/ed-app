@@ -160,7 +160,6 @@ const navigation = [
   { name: 'Lecții', to: {name: 'Lessons'}},
   { name: 'Agenda', to: {name: 'Agenda'}},
   { name: 'Progres', to: {name: 'Progres'}},
-  { name: 'Elevi', to: {name: 'Student'}},
 ]
 
   export default {

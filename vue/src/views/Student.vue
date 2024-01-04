@@ -1,5 +1,5 @@
 <template>
-    <PageComponent title="Aici adăugăm elevii">Conținut</PageComponent>
+    <PageComponent title="Lectiile pentru elevi">Conținut</PageComponent>
   </template>
   
   <script setup>

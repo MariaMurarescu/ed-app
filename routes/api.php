@@ -46,19 +46,25 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::resource('/lesson', \App\Http\Controllers\LessonController::class);
         Route::get('/DeVorba', [\App\Http\Controllers\DeVorbaController::class, 'index']);
+        Route::get('/lessons/{lessonId}/answers', [LessonController::class, 'getAnswersForLesson']);
+        
 
     });
 
     // Logout route for authenticated users
     Route::post('/logout', [AuthController::class, 'logout']);
     
-    // Example route for guests
-    Route::get('/lesson-by-slug/{lesson:slug}', [LessonController::class, 'showForGuest']);
-
-    // Example route that requires authentication but not a specific role
-    Route::post('/lesson/{lesson}/answer', [LessonController::class, 'storeAnswer']);
 });
 
 // Unprotected routes
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/lesson-by-slug/{lesson:slug}', [LessonController::class, 'showForGuest']);
+
+// Example route that requires authentication but not a specific role
+Route::post('/lesson/{lesson}/answer', [LessonController::class, 'storeAnswer']);
+
+
+
+
+

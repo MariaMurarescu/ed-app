@@ -28,7 +28,7 @@
           class="flex items-center"
         >
           <input
-            :id="option.uuid"
+            :id="option.uuid" 
             :name="'question' + question.id"
             :value="option.text"
             @change="emits('update:modelValue', $event.target.value)"
@@ -86,10 +86,10 @@
 
 <script setup>
 import { ref } from "vue";
-const { question, index, modelValue } = defineProps({
+const { question, index, modelValue } = defineProps({ //it is passed form the lesson public view
   question: Object,
   index: Number,
-  modelValue: [String, Array],
+  modelValue: [String, Array], //it is acceped as a model value inside de props
 });
 const emits = defineEmits(["update:modelValue"]);
 

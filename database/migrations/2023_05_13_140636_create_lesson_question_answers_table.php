@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('lesson_question_answers', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\Lesson::class, 'lesson_id');
             $table->foreignIdFor(\App\Models\LessonQuestion::class, 'lesson_question_id');
             $table->foreignIdFor(\App\Models\LessonAnswer::class, 'lesson_answer_id');
             $table->text('answer');

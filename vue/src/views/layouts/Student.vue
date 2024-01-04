@@ -156,8 +156,8 @@ import Notification from '../../components/Notification.vue';
 
 const navigation = [
   
-  { name: 'Agenda', to: {name: 'Agenda'}},
-  { name: 'Progres', to: {name: 'Progres'}},
+  { name: 'Student', to: {name: 'Student'}},
+  
 
 ]
 

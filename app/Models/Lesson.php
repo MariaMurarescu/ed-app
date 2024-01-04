@@ -35,4 +35,9 @@ class Lesson extends Model
     {
         return $this->hasMany(LessonAnswer::class);
     }
+
+    public function questionAnswers()
+    {
+        return $this->hasMany(LessonQuestionAnswer::class);
+    }
 }
