@@ -80,7 +80,8 @@
                 Editează lecție
               </router-link>
 
-              <button
+              <router-link
+              :to="{ name: 'LessonQuestionAnswer', params: { lessonId: data.latestLesson.id } }"
                 class="flex py-2 px-4 border border-transparent text-sm rounded-md text-indigo-500 hover:bg-indigo-700 hover:text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 <svg
@@ -97,7 +98,7 @@
                   />
                 </svg>
                 Vezi răspunsurile
-              </button>
+              </router-link>
             </div>
           </div>
           <div v-else class="text-gray-600 text-center py-16">
