@@ -37,6 +37,8 @@ const store = createStore({
           loading: false,
           data: {}
         },
+
+        enrollmentCode:null,
        
         
     },
@@ -176,6 +178,26 @@ const store = createStore({
                 throw err;
               });
           },
+          generateEnrollmentCode({commit}) {
+            return axiosClient
+            .post('/generate-enrollment-code')
+            .then(response => {
+              commit('SET_ENROLLMENT_CODE', response.data.code);
+            })
+            .catch(error => {
+              console.error(error.response.data.message);
+            });
+          },
+          enrollStudent({ commit }, code) {
+            return axiosClient
+            .post('/enroll-student', { code })
+            .then(response => {
+              console.log(response.data.mesage);
+            })
+            .catch(error =>{
+              console.error(error.response.data.message);
+            });
+          }
         
       },
   
@@ -225,6 +247,9 @@ const store = createStore({
         setLessonQuestionAnswers(state, answers) {
           console.log('Setting lesson question answers:', answers);
           state.lessonQuestionAnswers.data = answers; 
+        },
+        SET_ENROLLMENT_CODE(state, code) {
+          state.enrollmentCode = code;
         },
 
         notify: (state, {message, type}) => {

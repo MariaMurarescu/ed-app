@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\DeVorbaController;
+use App\Http\Controllers\SchoolClassController;
 
 
 
@@ -47,6 +48,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::resource('/lesson', \App\Http\Controllers\LessonController::class);
         Route::get('/DeVorba', [\App\Http\Controllers\DeVorbaController::class, 'index']);
         Route::get('/lessons/{lessonId}/answers', [LessonController::class, 'getAnswersForLesson']);
+        Route::post('/generate-enrollment-code', [SchoolClassController::class, 'generateEnrollmentCode']);
+        Route::post('/enroll-student', [SchoolClassController::class, 'enrollStudent']);
         
 
     });

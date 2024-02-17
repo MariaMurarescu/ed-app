@@ -6,6 +6,7 @@ import LessonPublicView from '../views/LessonPublicView.vue';
 import Agenda from '../views/Agenda.vue';
 import Progres from '../views/Progres.vue';
 import Student from '../views/Student.vue';
+import Enrollment from '../views/Enrollment.vue';
 import Register from '../views/Register.vue';
 import RequestPassword from '../views/RequestPassword.vue';
 import ResetPassword from '../views/ResetPassword.vue';
@@ -105,6 +106,9 @@ const routes = [
         meta: { requiresAuth: true, requiresStudent: 1 },
         children: [
           {path: '/student', name: 'Student', component: Student},
+          {path: '/enrollment', name: 'Enrollment', component: Enrollment}
+
+      
           
         ],
       },

@@ -156,7 +156,7 @@ import { useRouter } from 'vue-router';
 import Notification from '../../components/Notification.vue';
 
 const navigation = [
-  { name: 'De Vorbă', to: {name: 'DeVorba'} },
+  { name: 'De Vorbă', to: {name: 'DeVorba'}},
   { name: 'Lecții', to: {name: 'Lessons'}},
   { name: 'Agenda', to: {name: 'Agenda'}},
   { name: 'Progres', to: {name: 'Progres'}},
