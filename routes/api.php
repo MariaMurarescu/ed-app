@@ -36,7 +36,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
             return $request->user();
         });
 
-        // Add more protected routes for students here
+        Route::post('/enroll-student', [SchoolClassController::class, 'enrollStudent']);
     });
 
     // Protected routes requiring a specific role (e.g., role_id 2 for teachers)
@@ -49,7 +49,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/DeVorba', [\App\Http\Controllers\DeVorbaController::class, 'index']);
         Route::get('/lessons/{lessonId}/answers', [LessonController::class, 'getAnswersForLesson']);
         Route::post('/generate-enrollment-code', [SchoolClassController::class, 'generateEnrollmentCode']);
-        Route::post('/enroll-student', [SchoolClassController::class, 'enrollStudent']);
+        
         
 
     });
@@ -66,8 +66,3 @@ Route::get('/lesson-by-slug/{lesson:slug}', [LessonController::class, 'showForGu
 
 // Example route that requires authentication but not a specific role
 Route::post('/lesson/{lesson}/answer', [LessonController::class, 'storeAnswer']);
-
-
-
-
-

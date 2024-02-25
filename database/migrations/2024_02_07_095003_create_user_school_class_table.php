@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('school_class_id');
             $table->string('enrollment_code')->unique();
+            $table->unsignedInteger('role');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

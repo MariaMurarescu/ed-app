@@ -57,15 +57,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function enrolledClasses()
     {
         return $this->belongsToMany(SchoolClass::class, 'user_school_class')
-            ->withPivot('enrollement_code')
-            ->wherePivot('role', 1); //1 for student
+            ->withPivot('role', 'enrollment_code')
+            ->wherePivot('role', 1); //role 1 is for students
     }
 
     public function teachingClasses()
     {
         return $this->bleongToMany(SchoolClass::class, 'user_scholl_class')
-            ->withPivot('enrollment_code')
-            ->wherePivot('role', 2); //2 for teacher
+            ->withPivot('role','enrollment_code');
+            
     }
 
     public function isTeacher()

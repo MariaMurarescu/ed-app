@@ -16,7 +16,8 @@ class SchoolClass extends Model
 
     public function teacher()
     {
-        return $this->belongsTo(User::class); // No specific column for teacher in school_classes table
+        return $this->belongsTo(User::class, 'user_school_class', 'school_class_id', 'user_id')
+        ->withPivot('role', 'enrollment_code');
     }
 
 }
