@@ -37,6 +37,7 @@
         </svg>
         Editează
       </router-link>
+      
       <div class="flex items-center">
         <a
           :href="`/view/lesson/${lesson.slug}`"

@@ -294,4 +294,13 @@ return LessonResource::collection($query->paginate($perPage));
         return LessonQuestionAnswerResource::collection($answers);
     }
 
+public function getLessonsByRole($roleId)
+{
+    $lessons = Lesson::whereHas('user', function ($query) use ($roleId) {
+        $query->where('role_id', $roleId);
+    })->get();
+
+    return response()->json(['lessons' => $lessons]);
+}
+
 }

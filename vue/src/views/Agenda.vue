@@ -19,4 +19,3 @@ const generateCode = () => {
 
 const enrollmentCode = computed(() => store.state.enrollmentCode);
 </script>
-

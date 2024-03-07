@@ -40,4 +40,8 @@ class Lesson extends Model
     {
         return $this->hasMany(LessonQuestionAnswer::class);
     }
+
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

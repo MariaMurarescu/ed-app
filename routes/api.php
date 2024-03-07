@@ -37,6 +37,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         });
 
         Route::post('/enroll-student', [SchoolClassController::class, 'enrollStudent']);
+        Route::get('/lessons/role/{roleId}', [LessonController::class, 'getLessonsByRole']);
+        
     });
 
     // Protected routes requiring a specific role (e.g., role_id 2 for teachers)
@@ -49,8 +51,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/DeVorba', [\App\Http\Controllers\DeVorbaController::class, 'index']);
         Route::get('/lessons/{lessonId}/answers', [LessonController::class, 'getAnswersForLesson']);
         Route::post('/generate-enrollment-code', [SchoolClassController::class, 'generateEnrollmentCode']);
-        
-        
 
     });
 

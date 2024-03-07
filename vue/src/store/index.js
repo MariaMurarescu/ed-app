@@ -197,7 +197,18 @@ const store = createStore({
             .catch(error =>{
               console.error(error.response.data.message);
             });
-          }
+          },
+
+          fetchLessonsByRoleId({ commit }, roleId) {
+            return axiosClient.get(`/lessons/role/${roleId}`)
+              .then(response => {
+                commit('setStudentLessons', response.data.lessons);
+                return response;
+              })
+              .catch(error => {
+                return error;
+              });
+          },
         
       },
   
@@ -251,6 +262,9 @@ const store = createStore({
         SET_ENROLLMENT_CODE(state, code) {
           state.enrollmentCode = code;
         },
+        setStudentLessons(state, lessons) {
+          state.studentLessons = lessons;
+      },
 
         notify: (state, {message, type}) => {
           state.notification.show = true;

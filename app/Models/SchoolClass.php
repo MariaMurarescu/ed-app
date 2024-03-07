@@ -20,4 +20,9 @@ class SchoolClass extends Model
         ->withPivot('role', 'enrollment_code');
     }
 
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class);
+    }
+
 }
