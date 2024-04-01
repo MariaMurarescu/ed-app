@@ -235,7 +235,7 @@ return LessonResource::collection($query->paginate($perPage));
     private function createQuestion($data)
     {
         if (is_array($data['data'])) { //array in php, object in javascript
-            $data['data'] = json_encode($data['data']); //we cannot save array in the database and we encoded asa json
+            $data['data'] = json_encode($data['data']); //we cannot save array in the database and we encoded as json
         }
         $validator = Validator::make($data, [
             'question' => 'required|string',

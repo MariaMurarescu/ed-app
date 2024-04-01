@@ -64,5 +64,5 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/lesson-by-slug/{lesson:slug}', [LessonController::class, 'showForGuest']);
 
-// Example route that requires authentication but not a specific role
+// Route that requires authentication but not a specific role
 Route::post('/lesson/{lesson}/answer', [LessonController::class, 'storeAnswer']);

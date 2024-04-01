@@ -93,7 +93,6 @@ watch(
 
 function submitLesson() {
   if (submissionCount.value >= 3) {
-    // Display an error message or take appropriate action
     console.log('You have already submitted two responses.');
     return;
   }
@@ -108,21 +107,20 @@ function submitLesson() {
     .then((response) => {
       if (response.status === 201) {
         lessonFinished.value = true;
-        submissionCount.value++; // Increment the submission count
+        submissionCount.value++; 
       }
     });
 }
 
 function submitAnotherResponse() {
   if (submissionCount.value >= 3) {
-    // Display an error message or take appropriate action
     console.log('You have already submitted two responses.');
     return;
   }
 
   answers.value = {};
   lessonFinished.value = false;
-  submissionCount.value++; // Increment the submission count
+  submissionCount.value++; 
 }
 
 </script>

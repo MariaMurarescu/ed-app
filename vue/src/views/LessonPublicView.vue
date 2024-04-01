@@ -72,7 +72,6 @@ const submissionCount = ref(0);
 
 function submitLesson() {
   if (submissionCount.value >= 3) {
-    // Display an error message or take appropriate action
     console.log('You have already submitted two responses.');
     return;
   }
@@ -94,7 +93,6 @@ function submitLesson() {
 
 function submitAnotherResponse() {
   if (submissionCount.value >= 3) {
-    // Display an error message or take appropriate action
     console.log('You have already submitted two responses.');
     return;
   }
