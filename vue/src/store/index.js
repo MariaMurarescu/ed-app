@@ -39,8 +39,9 @@ const store = createStore({
         },
 
         enrollmentCode:null,
-       
-        
+        studentLessons: {
+          data: [],
+        }
     },
     getter:{},
     actions:{
@@ -263,8 +264,8 @@ const store = createStore({
           state.enrollmentCode = code;
         },
         setStudentLessons(state, lessons) {
-          state.studentLessons = lessons;
-      },
+          state.studentLessons.data = lessons;
+        },        
 
         notify: (state, {message, type}) => {
           state.notification.show = true;

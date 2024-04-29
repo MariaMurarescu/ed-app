@@ -108,8 +108,9 @@ const routes = [
         children: [
           {path: '/student', name: 'Student', component: Student},
           {path: '/enrollment', name: 'Enrollment', component: Enrollment},
-          {path: '/student-lessons/:id/:lesson_id/:user_id', name: 'StudentLessonView', component: StudentLessonView, props: true,},
+          {path: '/student-lessons/:id/:lesson_id/:user_id/', name: 'StudentLessonView', component: StudentLessonView, props: true},
           {path: "/view/lesson/:slug", name: 'StudentLessonView', component: StudentLessonView},
+          
 
           
         ],

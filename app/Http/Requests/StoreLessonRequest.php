@@ -34,7 +34,7 @@ class StoreLessonRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:1000',
-            'image' => 'nullable|string',
+            'image_url' => $this->image ? URL::to($this->image) : null,
             'user_id' => 'exists:users,id',
             'status' => 'required|boolean',
             'description' => 'nullable|string',
