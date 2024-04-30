@@ -27,56 +27,56 @@
       <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
         <div v-for="lesson in paginatedStudentLessons" :key="lesson.id"
           class="flex flex-col py-4 px-6 shadow-md bg-white hover:bg-gray-50 h-[470px]">
-          
-            <!-- Display Student Lesson Details -->
-            <img v-if="lesson.image_url" :src="lesson.image_url" alt=""
-              class="w-full h-40 object-cover rounded-md mb-4" />
-            <h1 class="text-lg font-semibold mb-2">{{ lesson.title }}</h1>
-            <p v-if="lesson.description" class="overflow-hidden flex-1 text-gray-500 mb-2 flex-grow">{{
-              lesson.description }}</p>
-            <p v-if="lesson.keywords" class="text-indigo-500 mr-2">{{ lesson.keywords }}</p>
-        
 
-            <div class="mt-auto"></div> <!-- Ensure buttons stay at the bottom -->
+          <!-- Display Student Lesson Details -->
+          <img v-if="lesson.image_url" :src="lesson.image_url" alt=""
+            class="w-full h-40 object-cover rounded-md mb-4" />
+          <h1 class="text-lg font-semibold mb-2">{{ lesson.title }}</h1>
+          <p v-if="lesson.description" class="overflow-hidden flex-1 text-gray-500 mb-2 flex-grow">{{
+            lesson.description }}</p>
+          <p v-if="lesson.keywords" class="text-indigo-500 mr-2">{{ lesson.keywords }}</p>
 
-            <div class="flex justify-between items-center mt-3">
-              <router-link
-                :to="{ name: 'StudentLessonView', params: { slug: lesson.slug, id: lesson.id, lesson_id: lesson.id, user_id: lesson.user_id } }"
-                class="flex py-2 px-3 md:px-2 border border-transparent text-sm rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                </svg>
-                Parcurge lectie
-              </router-link>
 
-              <!-- Like button with thumb-up SVG -->
-              <button @click="likeLesson(lesson.id)"
-                class="flex items-center py-2 px-3 md:px-2 border border-transparent text-sm rounded-md text-white bg-green-500 hover:bg-green-600 focus:ring-2 focus:ring-offset-2 focus:ring-green-400">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up">
-                  <path d="M7 21H3a2 2 0 01-2-2V5a2 2 0 012-2h4m9 0h4a2 2 0 012 2v14a2 2 0 01-2 2h-4m-7-5V3h12">
-                  </path>
-                </svg>
-                Like
-              </button>
+          <div class="mt-auto"></div> <!-- Ensure buttons stay at the bottom -->
 
-              <!-- Generate PDF -->
-              <button @click="markLessonTaken(lesson.id)"
-                class="flex py-2 px-3 md:px-2 border border-transparent text-sm rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd"
-                    d="M13 2a2 2 0 012 2v1h2a2 2 0 012 2v8a2 2 0 01-2 2h-2v1a2 2 0 01-2 2h-6a2 2 0 01-2-2v-1H3a2 2 0 01-2-2V7a2 2 0 012-2h2V4a2 2 0 012-2h6zM7 4v2h6V4H7zm8 10H5v-2h10v2z"
-                    clip-rule="evenodd" />
-                </svg>
-                Creează PDF
-              </button>
-            </div>
+          <div class="flex justify-between items-center mt-3">
+            <router-link
+              :to="{ name: 'StudentLessonView', params: { slug: lesson.slug, id: lesson.id, lesson_id: lesson.id, user_id: lesson.user_id } }"
+              class="flex py-2 px-3 md:px-2 border border-transparent text-sm rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              </svg>
+              Parcurge lectie
+            </router-link>
+
+            <!-- Like button with thumb-up SVG -->
+            <button @click="likeLesson(lesson.id)"
+              class="flex items-center py-2 px-3 md:px-2 border border-transparent text-sm rounded-md text-white bg-green-500 hover:bg-green-600 focus:ring-2 focus:ring-offset-2 focus:ring-green-400">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up">
+                <path d="M7 21H3a2 2 0 01-2-2V5a2 2 0 012-2h4m9 0h4a2 2 0 012 2v14a2 2 0 01-2 2h-4m-7-5V3h12">
+                </path>
+              </svg>
+              Like
+            </button>
+
+            <!-- Generate PDF -->
+            <button @click="generatePDF(lesson)"
+              class="flex py-2 px-3 md:px-2 border border-transparent text-sm rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M13 2a2 2 0 012 2v1h2a2 2 0 012 2v8a2 2 0 01-2 2h-2v1a2 2 0 01-2 2h-6a2 2 0 01-2-2v-1H3a2 2 0 01-2-2V7a2 2 0 012-2h2V4a2 2 0 012-2h6zM7 4v2h6V4H7zm8 10H5v-2h10v2z"
+                  clip-rule="evenodd" />
+              </svg>
+              Creează PDF
+            </button>
           </div>
         </div>
       </div>
-   
+    </div>
+
     <div v-else class="text-gray-600 text-center py-16">
       Nu aveți lecții adăugate!
     </div>
@@ -100,7 +100,8 @@
 import PageComponent from '../components/PageComponent.vue';
 import { ref, onMounted, computed, watch } from 'vue';
 import { useStore } from 'vuex';
-import { LESSONS_PER_PAGE } from "../constants";
+import { createPDF } from '../utils/pdfUtils';
+
 
 const store = useStore();
 const loadingStudent = ref(true);
@@ -163,6 +164,25 @@ function redirectToFirstPage() {
 function redirectToLastPage() {
   currentPage.value = totalPages.value;
 }
+
+// Update the generatePDF function to accept a lesson parameter
+async function generatePDF(lesson) {
+  // Modify description for lessons with empty description
+  const lessonWithDefaultDescription = {
+    ...lesson,
+    description: lesson.description || "No description available"
+  };
+
+  // Log the lesson data just before generating the PDF
+  console.log("Lesson Data:", lessonWithDefaultDescription);
+
+  // Generate PDF with modified lesson data
+  createPDF(lessonWithDefaultDescription);
+}
+
+
+
+
 
 // Fetch student lessons on component mount
 onMounted(getStudentLessons);
