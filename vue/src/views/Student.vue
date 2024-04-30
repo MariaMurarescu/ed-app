@@ -51,7 +51,6 @@
               Parcurge lectie
             </router-link>
 
-            <!-- Like button with thumb-up SVG -->
             <button @click="likeLesson(lesson.id)"
               class="flex items-center py-2 px-3 md:px-2 border border-transparent text-sm rounded-md text-white bg-green-500 hover:bg-green-600 focus:ring-2 focus:ring-offset-2 focus:ring-green-400">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -59,7 +58,7 @@
                 <path d="M7 21H3a2 2 0 01-2-2V5a2 2 0 012-2h4m9 0h4a2 2 0 012 2v14a2 2 0 01-2 2h-4m-7-5V3h12">
                 </path>
               </svg>
-              Like
+              Like {{ lesson.likes }}
             </button>
 
             <!-- Generate PDF -->
@@ -189,6 +188,9 @@ const likeLesson = async (lessonId) => {
   }
 }
 
+const isLiked = (lessonId) => {
+  return store.state.likedLessons.includes(lessonId);
+};
 
 
 

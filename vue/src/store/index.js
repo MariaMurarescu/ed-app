@@ -281,9 +281,13 @@ const store = createStore({
         setStudentLessons(state, lessons) {
           state.studentLessons.data = lessons;
         },
-        likeLesson(state, lessonId) {
+        likeLesson(state, { lessonId, likes }) {
           if (!state.likedLessons.includes(lessonId)) {
             state.likedLessons.push(lessonId);
+          }
+          const lessonIndex = state.studentLessons.data.findIndex(lesson => lesson.id === lessonId);
+          if (lessonIndex !== -1) {
+            state.studentLessons.data[lessonIndex].likes = likes;
           }
         },
         unlikeLesson(state, lessonId) {
