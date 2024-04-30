@@ -30,7 +30,7 @@ use App\Http\Controllers\SchoolClassController;
 
 // Define a middleware group for authenticated users
 Route::middleware(['auth:sanctum'])->group(function () {
-    // Protected routes requiring a specific role (e.g., role_id 1 for students)
+    // Protected routes for role_id 1 = students)
     Route::middleware(['role:1'])->group(function () {
         Route::get('/user', function (Request $request) {
             return $request->user();
@@ -38,10 +38,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::post('/enroll-student', [SchoolClassController::class, 'enrollStudent']);
         Route::get('/lessons/role/{roleId}', [LessonController::class, 'getLessonsByRole']);
+        Route::post('lessons/{lesson}/like', [LessonController::class, 'likeLesson']);
         
     });
 
-    // Protected routes requiring a specific role (e.g., role_id 2 for teachers)
+    // Protected routes for role_id 2 = teachers)
     Route::middleware(['role:2'])->group(function () {
         Route::get('/user', function (Request $request) {
             return $request->user();

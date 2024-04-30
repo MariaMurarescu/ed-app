@@ -17,7 +17,7 @@ class Lesson extends Model
     const TYPE_RADIO = 'radio';
     const TYPE_CHECKBOX = 'checkbox';
 
-    protected $fillable = ['user_id', 'image', 'title', 'slug', 'status', 'description', 'aim', 'keywords', 'expire_date'];
+    protected $fillable = ['user_id', 'image', 'title', 'slug', 'status', 'description', 'aim','likes', 'keywords', 'expire_date'];
 
     public function getSlugOptions(): SlugOptions
     {

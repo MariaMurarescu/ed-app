@@ -180,6 +180,15 @@ async function generatePDF(lesson) {
   createPDF(lessonWithDefaultDescription);
 }
 
+//  likeLesson method
+const likeLesson = async (lessonId) => {
+  try {
+    await store.dispatch('likeLesson', lessonId);
+  } catch (error) {
+    console.error('Error liking lesson:', error);
+  }
+}
+
 
 
 

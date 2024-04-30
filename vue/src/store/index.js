@@ -41,7 +41,8 @@ const store = createStore({
         enrollmentCode:null,
         studentLessons: {
           data: [],
-        }
+        },
+        likedLessons: [],
     },
     getter:{},
     actions:{
@@ -210,6 +211,20 @@ const store = createStore({
                 return error;
               });
           },
+
+          likeLesson({ commit }, lessonId) {
+            return axiosClient.post(`/lessons/${lessonId}/like`)
+              .then(() => {
+                commit('likeLesson', lessonId);
+              });
+          },
+
+          unlikeLesson({ commit }, lessonId) {
+            return axiosClient.post(`/lessons/${lessonId}/unlike`)
+              .then(() => {
+                commit('unlikeLesson', lessonId);
+              });
+          },
         
       },
   
@@ -265,7 +280,18 @@ const store = createStore({
         },
         setStudentLessons(state, lessons) {
           state.studentLessons.data = lessons;
-        },        
+        },
+        likeLesson(state, lessonId) {
+          if (!state.likedLessons.includes(lessonId)) {
+            state.likedLessons.push(lessonId);
+          }
+        },
+        unlikeLesson(state, lessonId) {
+          const index = state.likedLessons.indexOf(lessonId);
+          if (index !== -1) {
+            state.likedLessons.splice(index, 1);
+          }
+        },       
 
         notify: (state, {message, type}) => {
           state.notification.show = true;

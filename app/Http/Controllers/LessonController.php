@@ -275,6 +275,7 @@ return LessonResource::collection($query->paginate($perPage));
             ])],
             'description' => 'nullable|string',
             'aim' => 'nullable|string',
+            'likes'=> 'nullable|integer',
             'data' => 'present',
         ]);
 
@@ -301,6 +302,14 @@ public function getLessonsByRole($roleId)
     })->get();
 
     return response()->json(['lessons' => $lessons]);
+}
+
+public function likeLesson($lessonId)
+{
+    $lesson = Lesson::findOrFail($lessonId);
+    $lesson->increment('likes');
+    
+    return response()->json(['message' => 'Lesson liked successfully']);
 }
 
 }
