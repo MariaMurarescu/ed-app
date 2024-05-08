@@ -316,8 +316,9 @@ const store = createStore({
           state.selectedLesson = lesson;
         },
         SET_SELECTED_LESSON_LIKES(state, likes) {
-          state.selectedLessonLikes = likes;
+          state.selectedLessonLikes = Array.from({ length: likes }, (_, index) => index + 1);
         },
+        
 
         notify: (state, {message, type}) => {
           state.notification.show = true;
