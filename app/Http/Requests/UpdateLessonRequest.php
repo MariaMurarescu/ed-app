@@ -35,6 +35,7 @@ class UpdateLessonRequest extends FormRequest
             'status' => 'required|boolean',
             'description' => 'nullable|string',
             'aim'=> 'nullable|string',
+            'likes'=> 'nullable|integer',
             'keywords' => 'nullable|string',
             'keywords' => 'nullable|string',
             'expire_date' => 'nullable|date|after:tomorrow',

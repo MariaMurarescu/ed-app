@@ -179,14 +179,26 @@ async function generatePDF(lesson) {
   createPDF(lessonWithDefaultDescription);
 }
 
-//  likeLesson method
 const likeLesson = async (lessonId) => {
   try {
+    console.log('Like lesson action called with lessonId:', lessonId);
+
+    // Dispatch the 'likeLesson' action to update the server data
     await store.dispatch('likeLesson', lessonId);
+    
+    // Update the number of likes in the Vuex store
+    const lesson = store.state.studentLessons.data.find(lesson => lesson.id === lessonId);
+    if (lesson) {
+      console.log('Lesson found in store:', lesson);
+      store.commit('updateLessonLikes', { lessonId, likes: lesson.likes + 1 });
+    } else {
+      console.log('Lesson not found in store for lessonId:', lessonId);
+    }
   } catch (error) {
     console.error('Error liking lesson:', error);
   }
 }
+
 
 const isLiked = (lessonId) => {
   return store.state.likedLessons.includes(lessonId);

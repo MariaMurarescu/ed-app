@@ -44,4 +44,11 @@ class Lesson extends Model
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function getLikesAttribute($value)
+{
+    return $value; // You can modify this to add any logic you need
+}
+
+
 }

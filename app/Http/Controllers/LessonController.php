@@ -312,4 +312,14 @@ public function likeLesson($lessonId)
     return response()->json(['message' => 'Lesson liked successfully']);
 }
 
+public function getLikesForLesson($lessonId)
+{
+    $lesson = Lesson::findOrFail($lessonId);
+
+    // Assuming likes are stored in the lessons table as a column named 'likes'
+    $likes = $lesson->likes;
+
+    return response()->json(['likes' => $likes]);
+}
+
 }

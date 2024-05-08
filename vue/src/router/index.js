@@ -128,7 +128,8 @@ const routes = [
           {path: '/progres', name: 'Progres', component: Progres},
           {path: '/lessons/create', name: 'LessonCreate', component: LessonView},
           {path: '/lessons/:id', name: 'LessonView', component: LessonView },
-          {path: '/lessons/:lessonId/answers', name: 'LessonQuestionAnswer', component: LessonQuestionAnswer}
+          {path: '/lessons/:lessonId/answers', name: 'LessonQuestionAnswer', component: LessonQuestionAnswer},
+          {path: '/lessons/:lessonId/likes', name: 'LessonLikes', component: Progres, props:true,}
         ],
       },
 ] 

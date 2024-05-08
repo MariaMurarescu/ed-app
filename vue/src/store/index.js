@@ -43,6 +43,9 @@ const store = createStore({
           data: [],
         },
         likedLessons: [],
+        selectedLesson: null,
+        selectedLessonLikes: [],
+      
     },
     getter:{},
     actions:{
@@ -225,7 +228,14 @@ const store = createStore({
                 commit('unlikeLesson', lessonId);
               });
           },
-        
+          async fetchLikesForLesson({ commit }, lessonId) {
+            try {
+              const response = await axiosClient.get(`/lessons/${lessonId}/likes`);
+              commit('SET_SELECTED_LESSON_LIKES', response.data.likes);
+            } catch (error) {
+              console.error('Error fetching likes for lesson:', error);
+            }
+          },
       },
   
     mutations:{
@@ -295,7 +305,19 @@ const store = createStore({
           if (index !== -1) {
             state.likedLessons.splice(index, 1);
           }
-        },       
+        },
+        updateLikesCount(state, { lessonId, likes }) {
+          const lessonIndex = state.lessons.findIndex(lesson => lesson.id === lessonId);
+          if (lessonIndex !== -1) {
+            state.lessons[lessonIndex].likes = likes;
+          }
+        },
+        SET_SELECTED_LESSON(state, lesson) {
+          state.selectedLesson = lesson;
+        },
+        SET_SELECTED_LESSON_LIKES(state, likes) {
+          state.selectedLessonLikes = likes;
+        },
 
         notify: (state, {message, type}) => {
           state.notification.show = true;
