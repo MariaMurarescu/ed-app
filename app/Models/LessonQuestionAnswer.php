@@ -9,5 +9,11 @@ class LessonQuestionAnswer extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['lesson_question_id', 'lesson_answer_id', 'lesson_id', 'answer'];
+    protected $fillable = ['lesson_question_id', 'lesson_answer_id', 'lesson_id', 'answer', 'email'];
+
+    public function feedback()
+    {
+        return $this->hasMany(Feedback::class);
+    }
+
 }

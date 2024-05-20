@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\DeVorbaController;
 use App\Http\Controllers\SchoolClassController;
+use App\Http\Controllers\FeedbackController;
 
 
 
@@ -39,9 +40,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/enroll-student', [SchoolClassController::class, 'enrollStudent']);
         Route::get('/lessons/role/{roleId}', [LessonController::class, 'getLessonsByRole']);
         Route::post('lessons/{lesson}/like', [LessonController::class, 'likeLesson']);
-
-
-
         
     });
 
@@ -56,6 +54,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/lessons/{lessonId}/answers', [LessonController::class, 'getAnswersForLesson']);
         Route::post('/generate-enrollment-code', [SchoolClassController::class, 'generateEnrollmentCode']);
         Route::get('/lessons/{lessonId}/likes', [LessonController::class, 'getLikesForLesson']);
+        Route::post('/lesson-answer/{lessonId}/{answerId}/feedback', [FeedbackController::class, 'store']);
+// Temporary route for debugging
+Route::post('/test-feedback', [FeedbackController::class, 'testFeedback']);
+
+        
+
+
+
+
+
+
 
     });
 

@@ -190,7 +190,7 @@ const likeLesson = async (lessonId) => {
     const lesson = store.state.studentLessons.data.find(lesson => lesson.id === lessonId);
     if (lesson) {
       console.log('Lesson found in store:', lesson);
-      store.commit('updateLessonLikes', { lessonId, likes: lesson.likes + 1 });
+      store.commit('updateLikesCount', { lessonId, likes: lesson.likes + 1 });
     } else {
       console.log('Lesson not found in store for lessonId:', lessonId);
     }

@@ -62,6 +62,9 @@ const lesson = computed(() => store.state.currentLesson.data);
 
 const lessonFinished = ref(false);
 
+const email = ref(''); // Adaugă o referință pentru câmpul de email
+const showEmailError = computed(() => email.value.trim() === ''); // Verifică dacă emailul este gol
+
 
 //'answers' = object and the key will be the question id and the value will be the chosen answer on that question
 const answers = ref({}); 

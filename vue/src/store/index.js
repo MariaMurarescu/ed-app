@@ -173,7 +173,6 @@ const store = createStore({
             return axiosClient
               .get(`/lessons/${id}/answers`)
               .then((res) => {
-                console.log('Successful response:', res);
                 commit('setLessonQuestionAnswers', res.data);
                 commit('setLessonQuestionAnswersLoading', false);
                 return res;
@@ -183,6 +182,10 @@ const store = createStore({
                 throw err;
               });
           },
+          submitFeedback({ commit }, { answerId, feedback }) {
+            return axiosClient.post(`/lesson-answer/${answerId}/feedback`, { feedback });
+          },
+
           generateEnrollmentCode({commit}) {
             return axiosClient
             .post('/generate-enrollment-code')
@@ -236,6 +239,19 @@ const store = createStore({
               console.error('Error fetching likes for lesson:', error);
             }
           },
+          async submitFeedback({ commit, state }, { lessonId, answerId, feedback }) {
+            try {
+              const response = await axiosClient.post(`/lesson-answer/${lessonId}/${answerId}/feedback`, {
+                lesson_id: lessonId,
+                lesson_question_answer_id: answerId,
+                feedback: feedback,
+              });
+              commit('setFeedback', { answerId, feedback: response.data.feedback });
+            } catch (error) {
+              console.error('Error sending feedback:', error);
+            }
+          },
+          
       },
   
     mutations:{
@@ -312,12 +328,27 @@ const store = createStore({
             state.lessons[lessonIndex].likes = likes;
           }
         },
+        
         SET_SELECTED_LESSON(state, lesson) {
           state.selectedLesson = lesson;
         },
         SET_SELECTED_LESSON_LIKES(state, likes) {
           state.selectedLessonLikes = Array.from({ length: likes }, (_, index) => index + 1);
         },
+
+      setFeedback(state, { answerId, feedback }) {
+        // Find the lesson question answer object by its ID
+        const lessonQuestionAnswer = state.lessonQuestionAnswers.data.find(answer => answer.id === answerId);
+
+        // Update the feedback property of the found lesson question answer
+        if (lessonQuestionAnswer) {
+          lessonQuestionAnswer.feedback = feedback;
+        } else {
+          console.error(`Lesson question answer with ID ${answerId} not found.`);
+        }
+      },
+        
+      
         
 
         notify: (state, {message, type}) => {

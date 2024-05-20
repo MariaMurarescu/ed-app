@@ -90,30 +90,44 @@ return LessonResource::collection($query->paginate($perPage));
     public function storeAnswer(StoreLessonAnswerRequest $request, Lesson $lesson)
     {
         $validated = $request->validated();
+    
+        // Retrieve the name and email from the request
+        $email = $validated['email'];
+    
+        // Store the name and email into $data
+        $data = [
+            'lesson_id' => $lesson->id,
+            'email' => $email,
+        ];
+    
+        // Create a new lesson answer
         $lessonAnswer = LessonAnswer::create([
-            'lesson_id' =>$lesson->id,
-            'start_date' => date('Y-m-d H:i:s'),
-            'end_date' => date('Y-m-d H:i:s'),
+            'lesson_id' => $lesson->id,
+            'start_date' => now(), // Use the now() helper to get the current date and time
+            'end_date' => now(),
         ]);
-            //very important to ensure that each question is correct associated with the correct lesson 
-            foreach ($validated['answers'] as $questionId => $answer) {
-                $question = LessonQuestion::where(['id' => $questionId, 'lesson_id' => $lesson->id])->get();
-                if (!$question) {
-                    return response("Invalid question ID: \"$questionId\"", 400);
-                }
     
-                $data = [
-                    'lesson_id' => $lesson->id,
-                    'lesson_question_id' => $questionId,
-                    'lesson_answer_id' => $lessonAnswer->id,
-                    'answer' => is_array($answer) ? json_encode($answer) : $answer
-                ];
-    
-                $questionAnswer = LessonQuestionAnswer::create($data);
+        // Iterate through the answers and create lesson question answers
+        foreach ($validated['answers'] as $questionId => $answer) {
+            $question = LessonQuestion::where(['id' => $questionId, 'lesson_id' => $lesson->id])->first();
+            if (!$question) {
+                return response("Invalid question ID: \"$questionId\"", 400);
             }
     
-            return response("", 201);
-
+            $data = [
+                'lesson_id' => $lesson->id,
+                'lesson_question_id' => $questionId,
+                'lesson_answer_id' => $lessonAnswer->id,
+                'answer' => is_array($answer) ? json_encode($answer) : $answer,
+                'user_id' => $lesson->user_id, // Assign the user ID from the lesson
+                'email' => $email, // Add the email to the data
+            ];
+    
+            // Create a lesson question answer
+            $questionAnswer = LessonQuestionAnswer::create($data);
+        }
+    
+        return response("", 201);
     }
 
     /**

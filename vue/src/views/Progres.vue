@@ -2,11 +2,11 @@
   <PageComponent>
     <div class="lesson-container">
       <form @submit.prevent="handleSubmit" class="lesson-form">
-        <label for="lessonId" class="form-label">Select Lesson ID:</label>
-        <select v-model="selectedLessonId" id="lessonId" class="form-select">
+        <label for="lessonId" class="form-label mb-4">Selectează lecția:</label>
+        <select v-model="selectedLessonId" id="lessonId" class="form-select mr-4">
           <option v-for="lesson in lessons" :value="lesson.id" :key="lesson.id">{{ lesson.title }}</option>
         </select>
-        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Fetch Likes</button>
+        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Afișează statistici</button>
       </form>
 
       <!-- Display selected lesson -->
@@ -17,14 +17,15 @@
 
       <!-- Display likes count -->
       <div v-if="likesCount !== null" class="likes-container">
-        <p v-if="likesCount === 0" class="no-likes-message text-gray-700">No likes yet.</p>
-        <p v-else class="likes-message text-green-500">You have {{ likesCount }} like{{ likesCount !== 1 ? 's' : '' }}.</p>
+        <p v-if="likesCount === 0" class="no-likes-message text-red-700">Lecția încă nu a fost apreciată!.</p>
+        <p v-else class="likes-message text-green-500">Aveți {{ likesCount }} aprecieri {{ likesCount !== 1 ? 's' : '' }}.</p>
       </div>
 
       <!-- Display each like separately -->
       <ul v-if="selectedLessonLikes !== null" class="likes-list">
         <li v-for="(like, index) in selectedLessonLikes" :key="index" class="like-item text-gray-700">{{ like }}</li>
       </ul>
+
     </div>
   </PageComponent>
 </template>
@@ -32,7 +33,7 @@
 <script setup>
 import PageComponent from "../components/PageComponent.vue";
 import { useStore } from 'vuex';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 
 // Access the store
 const store = useStore();
@@ -72,10 +73,19 @@ store.watch(() => store.state.lessons.data, (value) => {
 });
 
 // Computed property to get the count of likes
-const likesCount = ref(0);
-store.watch(() => selectedLessonLikes.value.length, (value) => {
-  likesCount.value = value;
+const likesCount = computed(() => selectedLessonLikes.value.length);
+
+// Computed property to get the count of answers submitted for the selected lesson
+const answersCount = computed(() => {
+  if (selectedLesson.value) {
+    return selectedLesson.value.answers.length;
+  }
+  return 0;
 });
+
+// Computed properties to get total number of lessons and answers
+const totalLessons = computed(() => store.getters.totalLessons);
+const totalAnswers = computed(() => store.getters.totalAnswers);
 
 // Fetch lessons when component is mounted
 onMounted(() => {

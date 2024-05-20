@@ -2,7 +2,7 @@
   <div>
     <!-- Teacher-specific layout content -->
 
-    <header>Teacher Header</header>
+    <header></header>
     <div class="min-h-full">
       <Disclosure as="nav" class="bg-gray-800" v-slot="{ open }">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -124,7 +124,7 @@
 
     <router-view /> <!-- Render the content specific to each route -->
 
-    <footer>Teacher Footer</footer>
+    <footer></footer>
   </div>
 </template>
 

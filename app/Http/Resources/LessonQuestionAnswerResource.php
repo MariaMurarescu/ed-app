@@ -15,6 +15,7 @@ class LessonQuestionAnswerResource extends JsonResource
             'lesson_id' => $this->lesson_id,
             'lesson_question_id' => $this->lesson_question_id,
             'lesson_answer_id' => $this->lesson_answer_id,
+            'email'=>$this->email,
             'answer' => $this->answer,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

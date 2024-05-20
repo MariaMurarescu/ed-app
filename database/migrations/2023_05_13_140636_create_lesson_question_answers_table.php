@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Lesson::class, 'lesson_id');
             $table->foreignIdFor(\App\Models\LessonQuestion::class, 'lesson_question_id');
             $table->foreignIdFor(\App\Models\LessonAnswer::class, 'lesson_answer_id');
+            $table->string('email'); 
             $table->text('answer');
             $table->timestamps();
         });

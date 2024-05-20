@@ -22,7 +22,9 @@ class StoreLessonAnswerRequest extends FormRequest
     public function rules()
     {
         return [
-            'answers' => 'required|array'
+            'email' => 'required|email', // Add email validation rule
+            'answers' => 'required|array', // Validate answers as an array
+            'answers.*' => 'required', // Validate each answer
         ];
     }
 }
