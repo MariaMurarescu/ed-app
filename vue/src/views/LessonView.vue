@@ -257,22 +257,21 @@ function questionChange(question) {
 const errors = ref({});
 
 function saveLesson() {
-  let action = "creată";
-  if (model.value.id) {
-    action = "modificată";
-  }
   store.dispatch("saveLesson", { ...model.value }).then(({ data }) => {
     store.commit("notify", {
       type: "success",
-      message: "Lecția a fost " + action + "!",
+      message: "Lecția a fost " + (model.value.id ? "modificată" : "creată") + "!",
     });
+    // Update the image URL with the path returned from the backend
+    model.value.image_url = data.data.image_url;
     router.push({
       name: "LessonView",
       params: { id: data.data.id },
     });
+  }).catch(error => {
+    console.error("Save lesson error:", error);
   });
 }
-
 
 function deleteLesson() {
   if (

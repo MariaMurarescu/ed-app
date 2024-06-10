@@ -15,7 +15,7 @@ const store = createStore({
         lessons:{
           loading: false,
           links: [],
-          data:[],
+          data:{},
           from: null,
           page: 1,
           limit: null,
@@ -23,7 +23,7 @@ const store = createStore({
         },
         lessonQuestionAnswers: {
           loading: false,
-          data:{}
+          data:[]
         },
       
         questionTypes:["text", "select", "radio", "checkbox", "textarea"],
@@ -45,6 +45,17 @@ const store = createStore({
         likedLessons: [],
         selectedLesson: null,
         selectedLessonLikes: [],
+
+        studentFeedback: {
+          loading: false,
+          data: [],
+        },
+        feedback:[],
+        userFeedback: {
+          loading: false,
+          data: [],
+        },
+        
       
     },
     getter:{},
@@ -109,15 +120,13 @@ const store = createStore({
                 throw err;
               });
           },
-
-          saveLesson({ commit, dispatch}, lesson) {
-            delete lesson.image_url;
+          saveLesson({ commit, dispatch }, lesson) {
             let response;
             if (lesson.id) {
               response = axiosClient
                 .put(`/lesson/${lesson.id}`, lesson)
                 .then((res) => {
-                  commit('setCurrentLesson', res.data)
+                  commit('setCurrentLesson', res.data);
                   return res;
                 });
             } else {
@@ -168,10 +177,10 @@ const store = createStore({
             })
           },
 
-          getLessonQuestionAnswers({ commit }, id) {
+          getLessonQuestionAnswers({ commit }, lessonId) {
             commit('setLessonQuestionAnswersLoading', true);
             return axiosClient
-              .get(`/lessons/${id}/answers`)
+              .get(`/lessons/${lessonId}/answers`)
               .then((res) => {
                 commit('setLessonQuestionAnswers', res.data);
                 commit('setLessonQuestionAnswersLoading', false);
@@ -181,9 +190,6 @@ const store = createStore({
                 commit('setLessonQuestionAnswersLoading', false);
                 throw err;
               });
-          },
-          submitFeedback({ commit }, { answerId, feedback }) {
-            return axiosClient.post(`/lesson-answer/${answerId}/feedback`, { feedback });
           },
 
           generateEnrollmentCode({commit}) {
@@ -251,7 +257,36 @@ const store = createStore({
               console.error('Error sending feedback:', error);
             }
           },
-          
+          async getStudentFeedback({ commit }, lessonId) {
+            try {
+              const response = await axiosClient.get(`/students/feedback/${lessonId}`);
+              commit('setStudentFeedback', response.data);
+            } catch (error) {
+              console.error('Error fetching student feedback:', error);
+            }
+        
+          },
+            async fetchFeedbackForLesson({ commit }, lessonId) {
+              try {
+                const response = await axios.get(`/feedback/${lessonId}`);
+                commit('updateFeedback', response.data);
+              } catch (error) {
+                console.error('Error fetching feedback:', error);
+              }
+            },
+            
+            async fetchUserFeedback({ commit, state }) {
+              try {
+                const userId = state.user.data.id; // ID-ul utilizatorului curent
+                commit('setUserFeedbackLoading', true);
+                const response = await axiosClient.get(`/feedback/user/${userId}`);
+                commit('setUserFeedback', response.data);
+              } catch (error) {
+                console.error('Error fetching user feedback:', error);
+              } finally {
+                commit('setUserFeedbackLoading', false);
+              }
+            },
       },
   
     mutations:{
@@ -347,8 +382,18 @@ const store = createStore({
           console.error(`Lesson question answer with ID ${answerId} not found.`);
         }
       },
-        
-      
+      setStudentFeedback(state, feedback) {
+        state.studentFeedback.data = feedback;
+      },
+      updateFeedback(state, feedback) {
+        state.feedback = feedback;
+      },
+      setUserFeedback(state, feedback) {
+        state.userFeedback.data = feedback;
+      },
+      setUserFeedbackLoading(state, loading) {
+        state.userFeedback.loading = loading;
+      },
         
 
         notify: (state, {message, type}) => {

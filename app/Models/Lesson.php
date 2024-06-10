@@ -46,9 +46,9 @@ class Lesson extends Model
     }
 
     public function getLikesAttribute($value)
-{
-    return $value; // You can modify this to add any logic you need
-}
+    {
+        return $value; 
+    }
 
 
 }

@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreLessonAnswerRequest;
 use App\Http\Resources\LessonResource;
 use App\Http\Resources\LessonQuestionAnswerResource;
-use App\Models\Lesson;
+
 use App\Http\Requests\StoreLessonRequest;
 use App\Http\Requests\UpdateLessonRequest;
 use App\Http\Requests\ShowQuestionAnswerRequest;
+
+use App\Models\Lesson;
 use App\Models\LessonAnswer;
 use App\Models\LessonQuestion;
 use App\Models\LessonQuestionAnswer;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
@@ -21,41 +24,36 @@ use Illuminate\Validation\Rule;
 
 class LessonController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
-        $user = $request->user();
-        $perPage = request('per_page', 10);
-        $search = request('search', '');
+            $user = $request->user();
+            $perPage = request('per_page', 10);
+            $search = request('search', '');
 
-        $query = Lesson::where('user_id', $user->id)
-        ->orderBy('created_at', 'DESC');
+            $query = Lesson::where('user_id', $user->id)
+            ->orderBy('created_at', 'DESC');
 
-    if ($search) {
-        $query->where(function ($q) use ($search) {
-            $q->where('title', 'like', "%{$search}%")
-                ->orWhere('description', 'like', "%{$search}%");
-    });
-}
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
 
-return LessonResource::collection($query->paginate($perPage));
-        
+        return LessonResource::collection($query->paginate($perPage));       
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    
+    //Store a newly created resource in storage
     public function store(StoreLessonRequest $request)
     {
         $data = $request->validated();
 
-        // Check if image was given and save on local file system
-        if (isset($data['image'])){
-            $relativePath  = $this->saveImage($data['image']);
-            $data['image'] = $relativePath;
-        }
+    // Check if image was given and save on local file system
+    if (isset($data['image'])){
+        $relativePath  = $this->saveImage($data['image']);
+        $data['image'] = $relativePath;
+    }
 
         $lesson = Lesson::create($data);
 
@@ -69,9 +67,8 @@ return LessonResource::collection($query->paginate($perPage));
         return new LessonResource($lesson);
     }
 
-    /**
-     * Display the specified resource.
-     */
+    
+    // Display the specified resource
     public function show(Lesson $lesson, Request $request)
     {
         $user = $request->user();
@@ -130,9 +127,7 @@ return LessonResource::collection($query->paginate($perPage));
         return response("", 201);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    //Update the specified resource in storage.
     public function update(UpdateLessonRequest $request, Lesson $lesson)
     {
         $data = $request->validated();
@@ -164,10 +159,10 @@ return LessonResource::collection($query->paginate($perPage));
         //Find questions to add
         $toAdd = array_diff($newIds, $existingIds);
 
-        // Delete questions by $toDelete array
+        //Delete questions by $toDelete array
         LessonQuestion::destroy($toDelete);
 
-        // Create new questions
+        //Create new questions
         foreach ($data['questions'] as $question) {
             if (in_array($question['id'], $toAdd)) {
                 $question['lesson_id'] = $lesson->id;
@@ -175,7 +170,7 @@ return LessonResource::collection($query->paginate($perPage));
             }
         }
 
-        // Update existing questions
+        //Update existing questions
         $questionMap = collect($data['questions'])->keyBy('id');
         foreach ($lesson->questions as $question) {
             if (isset($questionMap[$question->id])) {
@@ -186,9 +181,7 @@ return LessonResource::collection($query->paginate($perPage));
         return new LessonResource($lesson);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    //Remove the specified resource from storage
     public function destroy(Lesson $lesson, Request $request)
     {
         $user = $request->user();
@@ -207,44 +200,50 @@ return LessonResource::collection($query->paginate($perPage));
         return response('', 204);
     }
 
+    //Method to save the image for lessons
     private function saveImage($image)
     {
-        // Check if image is valid base64 string
+        //Check if image is valid base64 string
         if (preg_match('/^data:image\/(\w+);base64,/', $image, $type)) {
-            // Take out the base64 encoded text without mime type
+            //Take out the base64 encoded text without mime type
             $image = substr($image, strpos($image, ',') + 1);
             // Get file extension
             $type = strtolower($type[1]); // jpg, png, gif
 
-            // Check if file is an image
+            //Check if file is an image
             if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
                 throw new \Exception('invalid image type');
             }
+            //Replace spaces with '+' and decode the base64 string
             $image = str_replace(' ', '+', $image);
             $image = base64_decode($image);
 
-            if ($image === false) {
-                throw new \Exception('base64_decode failed');
+            //Check if decoding was successful
+            if ($image === false) {throw new \Exception('base64_decode failed'); }
+                } else {throw new \Exception('did not match data URI with image data');}
+
+            //Define the directory to save images
+            $dir = 'images/';
+            //Generate a random file name with the correct extension
+            $file = Str::random() . '.' . $type;
+            //Get the absolute path to the images directory
+            $absolutePath = public_path($dir);
+            //Construct the relative path for the image
+            $relativePath = $dir . $file;
+
+            //Create the directory if it does not exist
+            if (!File::exists($absolutePath)) {
+                File::makeDirectory($absolutePath, 0755, true);
             }
-        } else {
-            throw new \Exception('did not match data URI with image data');
-        }
 
-        $dir = 'images/';
-        $file = Str::random() . '.' . $type;
-        $absolutePath = public_path($dir);
-        $relativePath = $dir . $file;
-        if (!File::exists($absolutePath)) {
-            File::makeDirectory($absolutePath, 0755, true);
-        }
-        file_put_contents($relativePath, $image);
+            //Save the decoded image data to the specified path
+            file_put_contents($relativePath, $image);
 
-        return $relativePath;
+            //Save the decoded image data to the specified path
+            return $relativePath;
     }
 
-    /**
-     * Create a question and return
-     */
+    //Create a question and return
 
     private function createQuestion($data)
     {
@@ -268,10 +267,8 @@ return LessonResource::collection($query->paginate($perPage));
         return LessonQuestion::create($validator->validated());
     }
 
-    /**
-     * Update question
-     */
-
+    
+    //Update question
     private function updateQuestion(LessonQuestion $question, $data)
     {
         if (is_array($data['data'])) {
@@ -309,31 +306,31 @@ return LessonResource::collection($query->paginate($perPage));
         return LessonQuestionAnswerResource::collection($answers);
     }
 
-public function getLessonsByRole($roleId)
-{
-    $lessons = Lesson::whereHas('user', function ($query) use ($roleId) {
-        $query->where('role_id', $roleId);
-    })->get();
+    public function getLessonsByRole($roleId)
+    {
+        $lessons = Lesson::whereHas('user', function ($query) use ($roleId) {
+            $query->where('role_id', $roleId);
+        })->get();
 
-    return response()->json(['lessons' => $lessons]);
-}
+        return response()->json(['lessons' => $lessons]);
+    }
 
-public function likeLesson($lessonId)
-{
-    $lesson = Lesson::findOrFail($lessonId);
-    $lesson->increment('likes');
-    
-    return response()->json(['message' => 'Lesson liked successfully']);
-}
+    public function likeLesson($lessonId)
+    {
+        $lesson = Lesson::findOrFail($lessonId);
+        $lesson->increment('likes');
+        
+        return response()->json(['message' => 'Lesson liked successfully']);
+    }
 
-public function getLikesForLesson($lessonId)
-{
-    $lesson = Lesson::findOrFail($lessonId);
+    public function getLikesForLesson($lessonId)
+    {
+        $lesson = Lesson::findOrFail($lessonId);
 
-    // Assuming likes are stored in the lessons table as a column named 'likes'
-    $likes = $lesson->likes;
+        // Assuming likes are stored in the lessons table as a column named 'likes'
+        $likes = $lesson->likes;
 
-    return response()->json(['likes' => $likes]);
-}
+        return response()->json(['likes' => $likes]);
+    }
 
 }

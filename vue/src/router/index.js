@@ -18,6 +18,7 @@ import Users from '../views/Users/Users.vue';
 import Report from '../views/Reports/Report.vue';
 import Dashboard from '../views/Dashboard.vue';
 import LessonQuestionAnswer from '../views/LessonQuestionAnswer.vue';
+import FeedbackStudent from '../views/FeedbackStudent.vue';
 
 
 import AuthLayout from '../components/AuthLayout.vue';
@@ -110,8 +111,7 @@ const routes = [
           {path: '/enrollment', name: 'Enrollment', component: Enrollment},
           {path: '/student-lessons/:id/:lesson_id/:user_id/', name: 'StudentLessonView', component: StudentLessonView, props: true},
           {path: "/view/lesson/:slug", name: 'StudentLessonView', component: StudentLessonView},
-          
-
+          {path: '/feedback', name: 'FeedbackStudent', component: FeedbackStudent, props: true,},
           
         ],
       },

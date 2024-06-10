@@ -49,7 +49,6 @@
 
       <div class="flex justify-center mt-5">
         <nav class="relative z-0 inline-flex justify-center rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-          <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
           <a v-for="(link, i) of lessons.links" :key="i" :disabled="!link.url" href="#" @click="getForPage($event, link)"
             aria-current="page"
             class="relative inline-flex items-center px-4 py-2 border text-sm font-medium whitespace-nowrap" :class="[

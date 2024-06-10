@@ -153,12 +153,13 @@ import {useStore} from 'vuex';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import Notification from '../../components/Notification.vue';
+import FeedbackStudent from '../FeedbackStudent.vue';
 
 const navigation = [
   
-  { name: 'Student', to: {name: 'Student'}},
+  { name: 'Lecții', to: {name: 'Student'}},
+  { name: 'Feedback', to: {name: 'FeedbackStudent'}},
   { name: 'Agenda', to: {name: 'Enrollment'}},
-  
 
 ]
 

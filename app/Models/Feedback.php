@@ -10,6 +10,11 @@ class Feedback extends Model
     use HasFactory;
     protected $fillable = ['lesson_id', 'lesson_question_answer_id', 'feedback'];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function lesson()
     {
         return $this->belongsTo(Lesson::class);

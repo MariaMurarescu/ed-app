@@ -40,6 +40,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/enroll-student', [SchoolClassController::class, 'enrollStudent']);
         Route::get('/lessons/role/{roleId}', [LessonController::class, 'getLessonsByRole']);
         Route::post('lessons/{lesson}/like', [LessonController::class, 'likeLesson']);
+        Route::get('/feedback/{lessonId}', [FeedbackController::class, 'getFeedbackForLesson']);
+        // Definim endpoint-ul pentru a prelua feedback-ul pentru utilizatorul curent
+        //Route::get('/feedback/user/{userId}', [FeedbackController::class, 'getFeedbackForUser']);
         
     });
 
@@ -55,16 +58,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/generate-enrollment-code', [SchoolClassController::class, 'generateEnrollmentCode']);
         Route::get('/lessons/{lessonId}/likes', [LessonController::class, 'getLikesForLesson']);
         Route::post('/lesson-answer/{lessonId}/{answerId}/feedback', [FeedbackController::class, 'store']);
-// Temporary route for debugging
-Route::post('/test-feedback', [FeedbackController::class, 'testFeedback']);
-
-        
-
-
-
-
-
-
 
     });
 

@@ -11,13 +11,15 @@ use App\Models\LessonAnswer;
 
 class DeVorbaController extends Controller
 {
+    // Method to get user-related lesson and answer statistics
     public function index(Request $request) {
+        // Get the authenticated user
         $user = $request->user();
 
-        //total number of lessons
+        //Total number of lessons
         $total = Lesson::query()->where('user_id', $user->id)->count();
 
-        //latest lessons
+        //Latest lessons
         $latest = Lesson::query()->where('user_id', $user->id)->latest('created_at')->first();
 
         // Total Number of answers
@@ -26,7 +28,7 @@ class DeVorbaController extends Controller
             ->where('lessons.user_id', $user->id)
             ->count();
 
-        //latest 5 answer
+        //Latest 5 answer
         $latestAnswers = LessonAnswer::query()
         ->join('lessons', 'lesson_answers.lesson_id', '=', 'lessons.id')
         ->where('lessons.user_id', $user->id)
@@ -34,6 +36,7 @@ class DeVorbaController extends Controller
         ->limit(5)
         ->getModels('lesson_answers.*');
 
+    // Return an array of lesson and answer statistics
     return [
         'totalLessons' => $total,
         'latestLesson' => $latest ? new LessonResourceDeVorba($latest) : null,
@@ -42,14 +45,15 @@ class DeVorbaController extends Controller
     ];
     }
 
+    // Method to get the last answer for a specific lesson
     public function getLastAnswerForLastLesson($lessonId)
-{
-    $lastAnswer = LessonQuestionAnswer::query()
-        ->where('lesson_id', $lessonId)
-        ->orderByDesc('created_at')
-        ->first();
+    {
+        $lastAnswer = LessonQuestionAnswer::query()
+            ->where('lesson_id', $lessonId)
+            ->orderByDesc('created_at')
+            ->first();
 
-    return new LessonQuestionAnswerResource($lastAnswer);
-}
-
+        // Return the last answer as a resource
+        return new LessonQuestionAnswerResource($lastAnswer);
+    }
 }
