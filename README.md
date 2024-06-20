@@ -1,3 +1,20 @@
+<p>DeVorbă - aplicație web educativă</p>
+
+# ed-app
+
+Pentru ca aplicația să poată rula este nevoie ca versiunea PHP 8.1+ să fie instalată și configurată.
+De asemenea, trebuie instalat și XAMPP.
+
+## Pași pentru a instala și rula aplicația
+
+1. **Clonați repository-ul local folosind comanda:**
+   ```bash
+   git clone https://github.com/user/ed-app.git
+
+2. **Navigați în directorul aplicației:**
+
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
