@@ -52,7 +52,7 @@ Aplicația va fi disponibilă la http://localhost:8000.
 Deschideți fișierul vue/.env și setați URL-ul API:
 VUE_APP_API_URL=http://localhost:8000
 
-12. **12. Porniți aplicația pe frontend prin executarea comenzii:**
+12. **Porniți aplicația pe frontend prin executarea comenzii:**
 `npm run dev`
 
 <p>Aplicația frontend va fi disponibilă la http://localhost:5173 sau un alt port definit. </p>
@@ -126,3 +126,5 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+**For Vue, please see Readme from inside the vue folder.**
