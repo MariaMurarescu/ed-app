@@ -127,7 +127,7 @@ class LessonController extends Controller
         return response("", 201);
     }
 
-    //Update the specified resource in storage.
+    //Method to update the lesson
     public function update(UpdateLessonRequest $request, Lesson $lesson)
     {
         $data = $request->validated();

@@ -11,7 +11,7 @@ class SchoolClass extends Model
     {
         return $this->belongsToMany(User::class, 'user_school_class')
             ->withPivot('enrollment_code')
-            ->wherePivot('role', 1); // Assuming role 1 is for students
+            ->wherePivot('role', 1); 
     }
 
     public function teacher()

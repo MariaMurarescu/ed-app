@@ -36,6 +36,10 @@ class AuthController extends Controller
             'role_id' => $request->role_id
         ]);
 
+                // Attach role to user
+                $role = Role::find($request->role_id);
+                $user->roles()->attach($role);
+
         $token = $user->createToken('main')->plainTextToken;
 
         //Return response with user data and token

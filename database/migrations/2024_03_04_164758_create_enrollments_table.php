@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('enrollments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained(); // Student ID
-            $table->foreignId('school_class_id')->constrained(); // School Class ID
+            $table->foreignId('user_id')->constrained(); 
+            $table->foreignId('school_class_id')->constrained(); 
             $table->string('enrollment_code')->unique();
             $table->timestamps();
         });

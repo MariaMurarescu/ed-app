@@ -39,7 +39,7 @@ const routes = [
     path: '/app',
     name: 'app',
     redirect: '/app/dashboard',
-    component: AdminLayout, // Assuming you have an AdminLayout component
+    component: AdminLayout, 
     meta: { requiresAuth: true, requiresAdmin: 3 },
     children: [
       {
@@ -119,7 +119,7 @@ const routes = [
       {
         path: "/teacher",
         name:'teacher',
-        component: TeacherLayout, // Teacher-specific layout
+        component: TeacherLayout, 
         meta: { requiresAuth: true, requiresTeacher: 2 },
         children: [
           {path: '/DeVorba', name: 'DeVorba', component: DeVorba},
@@ -150,6 +150,7 @@ const userRole = computed(() => {
   });
 
   router.beforeEach((to, from, next) => {
+    const isAuthenticated = store.state.user.token;
     const userRole = store.state.user.role_id;
   
     if (to.meta.requiresAuth && !store.state.user.token) {

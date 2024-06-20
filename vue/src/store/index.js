@@ -316,6 +316,7 @@ const store = createStore({
         setLessonsLoading: (state, loading) => {
           state.lessons.loading = loading;
         },
+        
         setCurrentLessonLoading: (state, loading) => {
           state.currentLesson.loading = loading;
         },
