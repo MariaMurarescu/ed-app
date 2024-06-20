@@ -12,8 +12,50 @@ De asemenea, trebuie instalat și XAMPP.
    git clone https://github.com/user/ed-app.git
 
 2. **Navigați în directorul aplicației:**
-```bash
-cd ed_app
+`cd ed_app`
+
+3. **Instalați dependințele PHP folosind Composer:**
+`composer install`
+
+4. **Creează baza de date MySQL**
+- Accesați interfața de administrare a MySQL (phpMyAdmin sau linia de comandă)
+- Creați o nou bază de date: CREATE DATABASE ed_app;
+
+5. **Copiați env.example în .env și ajustați configurațiile:**
+`cp .env.example .env`
+Deschideți fișierul .env în editorul preferat și setați detaliile bazei de date.
+
+DB_DATABASE=ed_app
+DB_USERNAME=numele_de_utilizator_propriu_mysql
+DB_PASSWORD=parola_proprie_mysql
+
+6. **Generați cheia de aplicație Laravel:**
+`php artisan migrate`
+
+7. **Rulați migrațiile pentru a crea tabelele necesare în baza de date:**
+`php artisan migrate`
+
+8. **Lansați serverul Laravel:**
+`php artisan serve`
+
+Aplicația va fi disponibilă la http://localhost:8000.
+
+9. **Navigați în folderul Vue**
+`cd vue`
+
+10. **10. Instalați dependințele JavaScript prin rularea în linia de comandă:**
+`npm install`
+
+11. **Copiați vue/.env.example în vue/.env și specificați URL-ul API:**
+`cp .env.example .env`
+
+Deschideți fișierul vue/.env și setați URL-ul API:
+VUE_APP_API_URL=http://localhost:8000
+
+12. **12. Porniți aplicația pe frontend prin executarea comenzii:**
+`npm run dev`
+
+<p>Aplicația frontend va fi disponibilă la http://localhost:5173 sau un alt port definit. </p>
 
 
 
