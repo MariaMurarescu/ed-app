@@ -9,7 +9,7 @@ De asemenea, trebuie instalat și XAMPP.
 
 1. **Clonați repository-ul local folosind comanda:**
    ```bash
-   git clone https://github.com/user/ed-app.git
+   git clone https://github.com/MariaMurarescu/ed-app.git
 
 2. **Navigați în directorul aplicației:**
 `cd ed_app`
