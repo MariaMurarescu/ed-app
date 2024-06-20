@@ -12,6 +12,9 @@ De asemenea, trebuie instalat și XAMPP.
    git clone https://github.com/user/ed-app.git
 
 2. **Navigați în directorul aplicației:**
+```bash
+cd ed_app
+
 
 
 
